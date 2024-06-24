@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小專-喝原味結合PHP練習</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- <script defer src="script.js"></script> -->
+  </head>
+  <body>
+    <div class="product-container-bg">
+      <div class="image-container">
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="C01" />
+          <div id="caption"></div>
+        </div>
+      </div>
+      <div class="product-context-container">
+        <h4><a href="https://www.taiwan7tea.com.tw/">七盞茶-芯月烏龍</a></h4>
+        <div class="product-context"></div>
+      </div>
+    </div>
+    <div class="product-container-bg">
+      <div class="image-container">
+        <img
+          src=""
+          alt=""
+          width="50%"
+          class="product-padding myImg"
+          id="myImg2"
+        />
+        <!-- The Modal -->
+        <div id="myModal2" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="C02" />
+          <div id="caption"></div>
+        </div>
+      </div>
+      <div class="product-context-container">
+        <h4><a href="https://macutea.com.tw/">麻古-高山金萱</a></h4>
+        <div class="product-context">
+          以獨家冰凌技術將新鮮草莓製成波登磚，與經典熟成茶及鮮切四季檸檬片巧妙融合，甜中帶點酸度，隨著時間流竄愈喝愈是濃烈，如同跳躍於唇舌上的絕妙滋味!
+        </div>
+      </div>
+    </div>
+    <div class="product-container-bg">
+      <div class="image-container">
+        <img
+          src=""
+          alt=""
+          width="50%"
+          class="product-padding myImg"
+          id="myImg3"
+        />
+        <!-- The Modal -->
+        <div id="myModal3" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="A01" />
+          <div id="caption"></div>
+        </div>
+      </div>
+      <div class="product-context-container">
+        <a href="https://unocha.com.tw/"><h4>烏弄-手採阿里山金萱</h4></a>
+        <p class="product-context">
+          喝到清新花香與奶香交織，能感受到茶湯細膩又豐富的層次，入口後花香撲鼻而來，就算不加糖也能喝到一股清甜，絕對是烏弄的入門必喝口味。
+        </p>
+      </div>
+    </div>
+    <script>
+  window.onload = () => {
+    const imageElements = document.querySelectorAll('img.modal-content');
+    const imageIds = Array.from(imageElements).map(img => img.id);
+    console.log(imageIds)
+    fetch("0623demo.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ imageIds: imageIds })  //key:value
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('成功:', data);
+      for (const id in data) {
+          const imgElement = document.getElementById(id);
+          
+        //   console.log(id)
+        //   console.log(`data:image/jpeg;base64,${data}`)
+          imgElement.src = `data:image/jpeg;base64,${data[id]}`;
+        }
+    })
+    .catch((error) => { 
+      console.error('失敗啦:', error);
+    });
+  };
+    </script>
+  </body>
+</html>
